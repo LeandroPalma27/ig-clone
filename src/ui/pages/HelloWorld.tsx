@@ -1,3 +1,10 @@
+import { useTheme } from "../../app/providers/ThemeProvider";
+
 export default function HelloWorld() {
-  return <h1>Hola mundo!</h1>;
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <button onClick={toggleTheme}>
+      Cambiar a {theme === "light" ? "dark" : "light"}
+    </button>
+  );
 }

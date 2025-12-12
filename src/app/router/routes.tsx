@@ -1,9 +1,9 @@
-import { createBrowserRouter } from "react-router-dom";
 import FeedPage from "../../ui/pages/FeedPage";
 import ProfilePage from "../../ui/pages/ProfilePage";
 import HelloWorld from "../../ui/pages/HelloWorld";
+import { createBrowserRouter } from "react-router-dom";
 
-export const router = createBrowserRouter([
+export const routes = createBrowserRouter([
   {
     path: "/",
     element: <FeedPage />,
