@@ -5,22 +5,20 @@ type Theme = "light" | "dark";
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Manejamos el estado del theme
   const [theme, setThemeState] = useState<Theme>(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) return stored;
 
-    // Pieza de codigo donde se verifica la data del dom, si esta con el valor de dark carga dark, si esta con el valor de light cargara light.
-    /* return window.matchMedia("(prefers-color-scheme: dark)").matches
+    /* if (stored) return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light"; */
-      // Retornamos solo dark, para que por defecto cargue dark.
-    return "dark";
+    return stored ?? "dark";
   });
 
   const setTheme = (newTheme: Theme) => {
@@ -32,12 +30,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  // Si el theme cambia, cambiamos el tema de todo el DOM.
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
